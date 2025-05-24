@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { SortAlgorithm } from '@/types/sort';
 import { useSortStore } from '@/store/sort-store';
 import { sortAlgorithmInfo } from '@/lib/sort-info';
-import { PlayIcon, PauseIcon, ArrowPathIcon, ArrowUturnLeftIcon, ForwardIcon, BackwardIcon } from '@heroicons/react/24/solid';
+import { PlayIcon, PauseIcon, ArrowPathIcon, ForwardIcon, BackwardIcon } from '@heroicons/react/24/solid';
 
 interface SortCardProps {
   algorithm: SortAlgorithm;
@@ -23,7 +23,7 @@ export const SortCard = ({ algorithm }: SortCardProps) => {
 
   const state = algorithmStates[algorithm];
   const info = sortAlgorithmInfo[algorithm];
-  const intervalRef = useRef<NodeJS.Timeout>();
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (state.isRunning && !state.isPaused) {
@@ -41,7 +41,7 @@ export const SortCard = ({ algorithm }: SortCardProps) => {
         clearInterval(intervalRef.current);
       }
     };
-  }, [state.isRunning, state.isPaused, state.currentStep, speed, algorithm, nextStep, pauseAlgorithm]);
+  }, [state.isRunning, state.isPaused, state.currentStep, state.steps.length, speed, algorithm, nextStep, pauseAlgorithm]);
 
   const currentStep = state.steps[state.currentStep] || { array: [], comparingIndices: [], swappedIndices: [], description: '' };
 

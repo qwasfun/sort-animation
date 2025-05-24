@@ -130,7 +130,7 @@ export const useSortStore = create<SortStore>((set, get) => ({
       if (array.length > 0) {
         get().setCurrentArray(array);
       }
-    } catch (error) {
+    } catch  {
       console.error('Invalid array format');
     }
   },

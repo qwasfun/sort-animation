@@ -16,14 +16,13 @@ import {
 export const ControlPanel = () => {
   const {
     isGlobalRunning,
-    isGlobalPaused,
+    
     speed,
     darkMode,
     currentArray,
     customArray,
     selectedPreset,
     setGlobalRunning,
-    setGlobalPaused,
     setSpeed,
     toggleDarkMode,
     setCurrentArray,
@@ -188,7 +187,7 @@ export const ControlPanel = () => {
                             if (array.length > 0) {
                               setCurrentArray(array);
                             }
-                          } catch (error) {
+                          } catch  {
                             console.error('Invalid array format');
                           }
                         }}

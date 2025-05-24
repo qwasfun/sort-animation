@@ -11,8 +11,6 @@ export const generateSortSteps = (
     time: 0,
   };
 
-  const startTime = performance.now();
-
   switch (algorithm) {
     case 'bubble':
       return bubbleSort([...array], steps, stats);
