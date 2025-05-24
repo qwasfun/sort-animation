@@ -1,9 +1,12 @@
 import { PresetArray } from '@/types/sort';
 
-export const presetArrays: PresetArray[] = [
+const generateRandomArray = (length: number, max: number) => 
+  Array.from({ length }, () => Math.floor(Math.random() * max));
+
+export const getPresetArrays = (): PresetArray[] => [
   {
     name: '随机数组',
-    array: Array.from({ length: 20 }, () => Math.floor(Math.random() * 100)),
+    array: generateRandomArray(20, 100),
     description: '生成一个包含20个随机数的数组，范围在0-99之间。',
   },
   {
@@ -23,12 +26,12 @@ export const presetArrays: PresetArray[] = [
   },
   {
     name: '小范围数组',
-    array: Array.from({ length: 20 }, () => Math.floor(Math.random() * 10)),
+    array: generateRandomArray(20, 10),
     description: '一个元素范围较小的数组，所有元素都在0-9之间。',
   },
   {
     name: '大范围数组',
-    array: Array.from({ length: 20 }, () => Math.floor(Math.random() * 1000)),
+    array: generateRandomArray(20, 1000),
     description: '一个元素范围较大的数组，所有元素都在0-999之间。',
   },
   {

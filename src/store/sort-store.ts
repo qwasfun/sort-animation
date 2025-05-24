@@ -2,6 +2,10 @@ import { create } from 'zustand';
 import { SortAlgorithm, SortState } from '@/types/sort';
 import { generateSortSteps } from '@/lib/sort-algorithms';
 
+// 生成随机数组的辅助函数
+const generateRandomArray = (length: number, max: number) =>
+  Array.from({ length }, () => Math.floor(Math.random() * max));
+
 interface SortStore {
   // 全局控制
   isGlobalRunning: boolean;
@@ -31,6 +35,9 @@ interface SortStore {
   resetAlgorithm: (algorithm: SortAlgorithm) => void;
   nextStep: (algorithm: SortAlgorithm) => void;
   prevStep: (algorithm: SortAlgorithm) => void;
+
+  // 初始化方法
+  initialize: () => void;
 }
 
 const initialSortState: SortState = {
@@ -64,10 +71,15 @@ export const useSortStore = create<SortStore>((set, get) => ({
   isGlobalPaused: false,
   speed: 1,
   darkMode: false,
-  currentArray: Array.from({ length: 20 }, () => Math.floor(Math.random() * 100)),
+  currentArray: [], // 初始为空数组
   customArray: '',
   selectedPreset: '随机数组',
   algorithmStates: { ...initialAlgorithmStates },
+
+  // 初始化方法
+  initialize: () => {
+    set({ currentArray: generateRandomArray(20, 100) });
+  },
 
   // 全局控制方法
   setGlobalRunning: (isRunning) => {

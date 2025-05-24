@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useSortStore } from '@/store/sort-store';
-import { presetArrays } from '@/lib/preset-arrays';
+import { getPresetArrays } from '@/lib/preset-arrays';
+import { PresetArray } from '@/types/sort';
 import { PlayIcon, PauseIcon, ArrowPathIcon, SunIcon, MoonIcon } from '@heroicons/react/24/solid';
 
 export const ControlPanel = () => {
@@ -24,6 +25,11 @@ export const ControlPanel = () => {
   } = useSortStore();
 
   const [showPresets, setShowPresets] = useState(false);
+  const [presetArrays, setPresetArrays] = useState<PresetArray[]>([]);
+
+  useEffect(() => {
+    setPresetArrays(getPresetArrays());
+  }, []);
 
   return (
     <motion.div
@@ -155,17 +161,21 @@ export const ControlPanel = () => {
         </div>
 
         <div className="mt-4">
-          <div className="flex items-end h-16 space-x-1">
+          <div className="flex space-x-1">
             {currentArray.map((value, index) => (
-
-              <div
-                key={index}
-                className={`flex-1 ${darkMode ? 'bg-gray-600' : 'bg-gray-200'
-                  }`}
-                style={{
-                  height: `${(value / Math.max(...currentArray)) * 100}%`,
-                }}
-              />
+              <div key={index} className="flex flex-col flex-1 items-center justify-end">
+                <div className='h-16 w-full flex items-end'>
+                  <div
+                    className={`w-full ${darkMode ? 'bg-gray-600' : 'bg-gray-200'}`}
+                    style={{
+                      height: `${(value / Math.max(...currentArray)) * 100}%`,
+                    }}
+                  />
+                </div>
+                <div className="text-xs whitespace-nowrap">
+                  {value}
+                </div>
+              </div>
             ))}
           </div>
         </div>
